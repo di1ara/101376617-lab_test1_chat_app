@@ -25,18 +25,8 @@
           <label for="password" class="form-label">Password</label>
           <input type="password" class="form-control" id="password" required />
         </div>
-        <div class="mb-3">
-          <label for="room" class="form-label">Select Room</label>
-          <select id="room" class="form-select">
-            <option value="devops">DevOps</option>
-            <option value="cloud-computing">Cloud Computing</option>
-            <option value="covid19">Covid-19</option>
-            <option value="sports">Sports</option>
-            <option value="nodejs">NodeJS</option>
-          </select>
-        </div>
         <button type="submit" class="btn btn-primary w-100">
-          Join Chat Room
+          Login
         </button>
       </form>
       <div class="text-center mt-3">
@@ -51,12 +41,12 @@
         const username = $("#username").val().trim();
         const password = $("#password").val().trim();
         const room = $("#room").val();
-
+    
         if (!username || !password) {
-          $("#error-message").text("Error: All fields are required");
+          $("#error-message").text("Error: All fields are required").show();
           return;
         }
-
+    
         fetch("/api/auth/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -65,16 +55,19 @@
           .then((res) => res.json())
           .then((data) => {
             if (data.error) {
-              $("#error-message").text("Error: " + data.error);
+              $("#error-message").text("Error: " + data.error).show();
             } else {
               localStorage.setItem("username", data.username);
-              localStorage.setItem("room", room); // Store selected room
-              alert("Login Successful! Redirecting...");
-              window.location.href = "/chat"; // Redirect to chat room
+              localStorage.setItem("room", room);
+
+              // Redirect after a short delay
+              setTimeout(() => {
+                window.location.href = "/chat";
+              }, 1500);
             }
           })
           .catch((err) => {
-            $("#error-message").text("Error: Login failed");
+            $("#error-message").text("Error: Login failed").show();
           });
       });
     </script>

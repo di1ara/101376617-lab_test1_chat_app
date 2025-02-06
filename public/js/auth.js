@@ -11,7 +11,7 @@ document.getElementById("signup-form").addEventListener("submit", function (e) {
   .then((data) => {
       if (data.success) {
           localStorage.setItem("username", username);
-          window.location.href = "/chat"; // Redirect to chat page
+          window.location.href = "/chat"; 
       } else {
           alert(data.message);
       }
